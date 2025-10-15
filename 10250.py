@@ -1,6 +1,10 @@
 t = int(input(""))
 for case in range(t):
     h,w,n = map(int,input("").split())
-    cw = str(n//h+1)
-    ch = str(n%h)
-    print(ch+"0"+cw)
+    if n%h == 0:
+        ch = h
+        cw = n//h
+    else:
+        cw = n//h+1
+        ch = n%h
+    print(f"{ch}{cw:02d}")
