@@ -1,0 +1,24 @@
+#while True:
+#    n = int(input(''))
+#    cards = list(range(1,n+1))
+#
+#    while len(cards) != 1:
+#        cards.pop(0)
+#        first_card = cards.pop(0)
+#        cards.append(first_card)
+#
+#    for i in cards:
+#        print(i)
+
+n = int(input(""))
+mulnum = 0
+if n == 1:
+    print(1)
+while n > 1:
+    nowlist = range(2,2**mulnum+1,2)
+    for i in nowlist:
+        n-=1
+        if n < 2:
+            print(i)
+            break
+    mulnum += 1
