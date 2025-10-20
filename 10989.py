@@ -1,7 +1,10 @@
-n = int(input(""))
+import sys
+input = sys.stdin.readline
+
+n = int(input())
 numlist = []
 for _ in range(n):
-    new_num = int(input(""))
+    new_num = int(input())
     idx = 0
     try:
         while numlist[idx] < new_num:
