@@ -1,26 +1,29 @@
 n,m = map(int,input('').split())
 
-s = ''
+s = []
 for _ in range(n):
-    s += input('')
+    s.append(input(''))
 
-fixed_s1 = ''
-for h in range(8):
-    for w in range(8):
-        if (w+h) % 2 == 0:
-            fixed_s1 += 'W'
-        else:
-            fixed_s1 += 'B'
 
 start_n = 0
 start_m = 0
-eq_num = 0
+min_eq_num = 65
+
 while start_n + 8 <= n:
+    eq_num = 0
     for h in range(start_n,start_n+8):
         for w in range(start_m,start_m+8):
-            
-
-    if n*m - eq_num > eq_num:
-        print(eq_num)
+            if (h+w) % 2 == 0:
+                if s[h][w] == 'W':
+                    eq_num += 1
+            else:
+                if s[h][w] == 'B':
+                    eq_num += 1
+    if start_m+8 < m:
+        start_m += 1
     else:
-        print(n*m - eq_num)
+        start_m = 0
+        start_n += 1
+
+    min_eq_num = min(eq_num,64-eq_num,min_eq_num)
+print(min_eq_num)

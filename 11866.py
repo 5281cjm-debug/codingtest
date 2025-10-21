@@ -10,7 +10,7 @@
 
 # print('<{}>'.format(yosepus))
 
-class Yosepus():
+"""class Yosepus():
     def __init__(self,n,k):
         self.n = n
         self.k = k
@@ -61,7 +61,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+"""
 # class Yosepus():
 #     def __init__(self,n,k):
 #         self.n = n
@@ -108,3 +108,66 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     main()
+
+class Linked_list():
+    def __init__(self,num,next=None):
+        self.next = next
+        self.num = num
+    def get_num(self):
+        return self.num
+    def set_next(self,next):
+        self.next = next
+    def get_next(self):
+        return self.next
+    def get_last(self):
+        node = self
+        while node.get_next() is not None and node.get_next() != self:
+            node = node.get_next()
+        return node
+        
+def list2circle_linked_list(int_list):
+    start_circle_linked_list = Linked_list(1)
+            
+    for int_list_idx in range(2, len(int_list)+1):
+        next_circle_linked_list = Linked_list(int_list_idx)
+        start_circle_linked_list.get_last().set_next(next_circle_linked_list)
+    
+    start_circle_linked_list.get_last().set_next(start_circle_linked_list)
+    return start_circle_linked_list
+
+
+def yosepus(circle_linked_list, n, k):
+    # 처음 제거될 노드의 이전 노드를 찾아 초기화
+    if k == 1:
+        return list(range(1,n+1))
+    now_add = circle_linked_list
+    for _ in range(k - 2):  # k번째 이전 노드로 이동
+        now_add = now_add.get_next()
+
+    sorted_list = []
+    while len(sorted_list) < n:
+        if now_add.get_next() == now_add:
+            sorted_list.append(now_add.get_num())
+            break
+        sorted_list.append(now_add.get_next().get_num())
+        now_add.set_next(now_add.get_next().get_next())
+        now_add = now_add.get_next()
+        for _ in range(k-2):
+            now_add = now_add.get_next()
+
+        
+
+    return sorted_list
+def main():
+    n,k = map(int,input('').split())
+    range_n_list = list(range(1,n+1))
+    circle_linked_list = list2circle_linked_list(range_n_list)
+    yosepused_list = yosepus(circle_linked_list,n, k)
+    print('<',end='')
+    for i in yosepused_list[:-1]:
+        print(i,end=', ')
+    print(yosepused_list[-1],end='')
+    print('>')
+
+if __name__ == "__main__":
+    main()
