@@ -1,4 +1,4 @@
-
+"""
 import sys
 def input():
     readin = sys.stdin.readline()
@@ -15,6 +15,19 @@ def dfs1(inode):
         return ps
     else:
         return 'TT'
+
+def bfs(node):
+    queue = []
+    visited = []
+    visited.append(node)
+    queue += node.get_edges()
+    while len(queue) != 0:
+        now_node = queue.pop(0)
+        if now_node in visited:
+            continue
+        visited.append(now_node)
+        queue += now_node.get_edges()
+    return visited
 
 
 # def dfs2(node,edges):
@@ -77,19 +90,46 @@ for h in range(n):
                 now_node.add_edge(school[h][w-1])
         except:
             pass
+people = len([i for i in bfs(inode) if i.get_state() == 'P'])
+if people == 0:
+    people = 'TT'
+print(people)
+"""
+from collections import deque
+n,m = map(int,input().split())
+school = []
 
-print(dfs1(inode))
+ih = 0
+iw = 0
+for h in range(n):
+    line = []
+    for w,state in enumerate(list(input())):
+        line.append(state)
+        if state == 'I':
+            ih = h
+            iw = w  
+    school.append(line)
 
+queue = deque([])
+now_node = (ih, iw, 'I')
+queue.append(now_node)
+visited = set()
+while queue:
+    now_node = queue.popleft()
+    if now_node in visited:
+        continue
+    else:
+        visited.add(now_node)
 
-# n,m = map(int,input().split())
-# school = []
-# for _ in range(n):
-#     line = []
-#     for state in list(input()):
-#         line.append(state)
-#     school.append(line)
-
-# innodes = []
-# for h in range(n):
-#     for w in range(m):
-#         if h*m+w in 
+    h = now_node[0]
+    w = now_node[1]
+    if h-1 >= 0 and school[h-1][w] != 'X':
+        queue.append((h-1, w,school[h-1][w]))
+    if h+1 < n and school[h+1][w] != 'X':
+        queue.append((h+1, w,school[h+1][w])) 
+    if w-1 >= 0 and school[h][w-1] != 'X':
+        queue.append((h, w-1,school[h][w-1]))
+    if w+1 < m and school[h][w+1] != 'X':
+        queue.append((h, w+1,school[h][w+1])) 
+peoples = len([i for i in visited if i[2]=='P'])
+print(peoples if peoples>0 else 'TT')
