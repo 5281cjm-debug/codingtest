@@ -34,23 +34,24 @@ for _ in range(t):
     count = 0
     for y in range(n):
         for x in range(m):      
-            if (x,y) in visited:
+            if (x,y) in visited or xy[y][x] == 0:
                 continue
             queue = deque()
             count += 1
             queue.append((x,y))
+            visited.add((x,y))
             while queue:
                 w,h = queue.popleft()
-                if w-1 >= 0 and xy[h][w-1] not in visited and xy[h][w-1] == 1:
+                if w-1 >= 0 and (w-1,h) not in visited and xy[h][w-1] == 1:
                     queue.append((w-1,h))
                     visited.add((w-1,h))
-                if w+1 < m and xy[h][w+1] not in visited and xy[h][w+1] == 1:
+                if w+1 < m and (w+1,h) not in visited and xy[h][w+1] == 1:
                     queue.append((w+1,h))
                     visited.add((w+1,h))
-                if h-1 >= 0 and xy[h-1][w] not in visited and xy[h-1][w] == 1:
+                if h-1 >= 0 and (w,h-1) not in visited and xy[h-1][w] == 1:
                     queue.append((w,h-1))
                     visited.add((w,h-1))
-                if h+1 > n and xy[h+1][w] not in visited and xy[h+1][w] == 1:
+                if h+1 < n and (w,h+1) not in visited and xy[h+1][w] == 1:
                     queue.append((w,h+1))
                     visited.add((w,h+1))
 
